@@ -17,15 +17,15 @@ categoryController.getCategory = async (req, res, next) => {
 };
 
 categoryController.addCategory = async (req, res, next) => {
-  const { addCat } = req.body;
+  const { categoryId, name } = req.body;
 
   try {
-    const existingCategory = await Category.findOne({ category: addCat });
+    const existingCategory = await Category.findOne({ categoryId });
     if (existingCategory) {
       return res.status(409).json({ message: 'Category already exists' });
     }
 
-    const newCategory = await Category.create({ category: addCat });
+    const newCategory = await Category.create({ categoryId, name });
     res.locals.category = newCategory;
     return next();
   } catch (err) {
@@ -58,12 +58,13 @@ categoryController.removeCategory = async (req, res, next) => {
 
 };
 
-categoryController.editCategory = async (req, res, next) => {
-  const {oldCat, newCat} = req.body;
+categoryController.addTaskToCategory = async (req, res, next) => {
+  const {categoryId, newTask} = req.body;
 
   try {
-    const update = await Category.findOneAndUpdate({category: oldCat}, {category: newCat}, {new:true});
-    console.log('updated Category: ', update);
+    const update = await Category.findOneAndUpdate(
+      { categoryId },
+      { $push: {tasks: newTask._id}});
     res.locals.category = update;
     return next();
   } catch (err) {

@@ -44,6 +44,7 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
   };
 
   const handleTaskClick = (task) => {
+
     setSelectedTask(task);
   };
 
@@ -69,8 +70,10 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
 
     // Send the taskData to the backend:
     const newTask = await api.createTask(taskData);
+    await api.addTaskToCategory({categoryId, newTask});
 
     if (newTask) {
+
       addNewTask(categoryId, newTask);
       handleCloseModal();
     }

@@ -23,13 +23,13 @@ export const api = {
     return await response.json();
   },
 
-  editCategory: async (categoryData) => {
-    const response = await fetch(`${BASE_URL}/route/category`, {
+  addTaskToCategory: async (categoryAndTaskInfo) => {
+    const response = await fetch(`${BASE_URL}/route/category/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(categoryData),
+      body: JSON.stringify(categoryAndTaskInfo),
     });
     return await response.json();
   },

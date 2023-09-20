@@ -6,12 +6,16 @@ import Users from './components/Users';
 import { api } from './utils/api';
 import { db } from '../server/models/userModel';
 
+const todoID = uuidv4();
+
 const initialCategories = {
-  [uuidv4()]: {
+  [todoID]: {
     name: 'Todo',
     items: [],
   },
 };
+
+console.log('INIT CATE: ', initialCategories);
 
 const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   const { source, destination } = result;
@@ -88,8 +92,26 @@ export default function App() {
   }, []);
 
 
-  const addNewCategory = () => {
+
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const userData = await api.getUsers();
+        setUsers(userData); // Update the users state with fetched data
+      } catch (error) {
+        console.error('ERROR IN USE', error);
+      }
+    }
+
+    fetchUsers();
+  }, []);
+
+
+  const addNewCategory = async () => {
     const newId = uuidv4();
+
+    await api.createCategory({ categoryId: newId, name: 'New Category'});
+
     setCategories({
       ...categories,
       [newId]: {
