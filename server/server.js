@@ -11,13 +11,14 @@ const app = express();
 mongoose
   .connect(
     'mongodb+srv://scworking314:0LaDmb0bskEgswvd@cluster0.q3ryxvo.mongodb.net/',
+    // 'mongodb+srv://cstamper:6fk2kentQycH5DKV@cluster0.8kotzro.mongodb.net/?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }
   )
   .then(() => {
-    console.log('MongoDB connected successfully');
+    console.log('MongoDB connected successfully!');
   })
   .catch((err) => {
     console.error('MongoDB connection error:', err);

@@ -7,6 +7,8 @@ const taskController = require('../controllers/taskController');
 const categoryController = require('../controllers/categoryController');
 
 //CATEGORY CONTROLLERS
+
+
 router.get('/category', categoryController.getCategory, (req, res) => {
   console.log('finished getting categoriies', res.locals.category);
   res.status(200).json(res.locals.category);
@@ -17,7 +19,7 @@ router.post('/category', categoryController.addCategory, (req, res) => {
   res.status(200).json(res.locals.category);
 });
 
-router.put('/category', categoryController.editCategory, (req, res) => {
+router.put('/category', categoryController.addTaskToCategory, (req, res) => {
   console.log('finished updating category', res.locals.category);
   res.status(200).json(res.locals.category);
 });
