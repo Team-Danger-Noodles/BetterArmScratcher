@@ -1,8 +1,11 @@
 const Category = require('../models/categoryModel');
 
+
 const categoryController = {};
 
+
 categoryController.getCategory = async (req, res, next) => {
+  console.log('HEHEHEHEH HOOOHOOOO simon L wuz here HAHAHAHAHAAAA');
   try{
     const categories = await Category.find({});
     res.locals.category = categories;
@@ -15,6 +18,7 @@ categoryController.getCategory = async (req, res, next) => {
   }
   
 };
+
 
 categoryController.addCategory = async (req, res, next) => {
   const { categoryId, name } = req.body;
@@ -35,6 +39,7 @@ categoryController.addCategory = async (req, res, next) => {
     });
   }
 };
+
 
 categoryController.removeCategory = async (req, res, next) => {
   const {removeCat} = req.body;
@@ -57,6 +62,7 @@ categoryController.removeCategory = async (req, res, next) => {
 
 
 };
+
 
 categoryController.addTaskToCategory = async (req, res, next) => {
   const {categoryId, newTask} = req.body;

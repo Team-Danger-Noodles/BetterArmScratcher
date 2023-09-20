@@ -45,13 +45,14 @@ export const api = {
     return await response.json();
   },
 
+  
+
   removeUser: async (userData) => {
-    const response = await fetch(`${BASE_URL}/route/user`, {
+    const response = await fetch(`${BASE_URL}/route/user?userId=${userData.userId}&projectName=${userData.projectName}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userData),
     });
     return await response.json();
   },
@@ -88,4 +89,54 @@ export const api = {
     });
     return await response.json();
   },
+
+  // PROJECT REQUESTS
+  addProject: async (projectInfo) => {
+    const response = await fetch(`${BASE_URL}/route/project`, {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(projectInfo),
+    });
+    return await response.json();
+  },
+
+  getProject: async (projectInfo) => {
+    const response = await fetch(`${BASE_URL}/route/project`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // ?????????????????????? How to send req.params???
+      params: JSON.stringify(projectInfo),
+    });
+    return await response.json();
+  },
+
+
+  getUsers: async (projectInfo) => {
+    const response = await fetch(`${BASE_URL}/route/user?projectName=${projectInfo}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: JSON.stringify(projectInfo),
+    });
+    return await response.json();
+  },
+
+
+  getCategories: async (projectInfo) => {
+    const response = await fetch(`${BASE_URL}/route/category?projectName=${projectInfo}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: JSON.stringify(projectInfo),
+    });
+    return await response.json();
+  },
+
 };
+

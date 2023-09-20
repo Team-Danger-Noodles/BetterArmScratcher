@@ -10,6 +10,10 @@ export default function User({ users, userId, addNewUser, removeUser }) {
     const userData = {};
     formData.forEach((value, key) => {
       userData[key] = value;
+      
+      //HARD CODING PROJECT ID for now!!!!!!// 
+      userData.projectName = 'Project0'; // later, need to dynamically add in the project name that is being worked on
+      ////////
     });
 
     // Send the taskData to the backend:

@@ -5,6 +5,7 @@ const path = require('path');
 const userController = require('../controllers/userController');
 const taskController = require('../controllers/taskController');
 const categoryController = require('../controllers/categoryController');
+const projectController = require('../controllers/projectController');
 
 //CATEGORY CONTROLLERS
 
@@ -14,7 +15,7 @@ router.get('/category', categoryController.getCategory, (req, res) => {
   res.status(200).json(res.locals.category);
 });
 
-router.post('/category', categoryController.addCategory, (req, res) => {
+router.post('/category', categoryController.addCategory, projectController.addCategory, (req, res) => {
   console.log('finished creating category', res.locals.category);
   res.status(200).json(res.locals.category);
 });
@@ -30,15 +31,19 @@ router.delete('/category', categoryController.removeCategory, (req, res) => {
 });
 
 // USER CONTROLLERS
-router.post('/user', userController.addUser, (req, res) => {
+router.post('/user', userController.addUser, projectController.addUser, (req, res) => {
   console.log('added user', res.locals.newUser);
   res.status(200).json(res.locals.newUser);
 });
 
-router.delete('/user', userController.removeUser, (req, res) => {
+
+////////////
+router.delete('/user', userController.removeUser, projectController.removeUser, (req, res) => {
   console.log('removed user', res.locals.deletedUser);
   res.status(200).json(res.locals.deletedUser);
 });
+///////////////
+
 
 // TASK CONTROLLERS
 router.get('/task', taskController.getTask, (req, res) => {
@@ -59,6 +64,23 @@ router.put('/task', taskController.editTask, (req, res) => {
 router.delete('/task', taskController.removeTask, (req, res) => {
   console.log('finished removing task', res.locals.task);
   res.status(200).json(res.locals.task);
+});
+
+//projects
+
+router.post('/project', projectController.addProject, (req, res) => {
+  console.log('finished adding project');
+  res.status(201).json(res.locals.project);
+});
+
+router.get('/project', projectController.getProject, (req, res) => {
+  console.log('finished getting project');
+  res.status(200).json(res.locals.project);
+});
+
+router.get('/user', projectController.getUsers, userController.getUsersById, (req, res) => {
+  console.log('finished getting users off of project');
+  res.status(200).json(res.locals.users);
 });
 
 module.exports = router;

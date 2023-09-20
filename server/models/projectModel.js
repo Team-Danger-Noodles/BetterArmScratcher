@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const projectSchema = new Schema({
-  projectId: String,
-  name: String,
+  name: {type: String, unique: true, required: true},
   users: [{
     type: Schema.Types.ObjectId,
     ref: 'User',

@@ -4,8 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 import Category from './components/Category';
 import Users from './components/Users';
 import {api} from './utils/api';
+import { useEffect } from 'react';
 
 const todoID = uuidv4();
+
+
+//NEED TO GIVE PROJECTS 
+
+//need to do an API call to backend w/ the array of category ID's 
+//--> find categories info there, and respond with them in the structure below, so the front end can render
 
 const initialCategories = {
   [todoID]: {
@@ -76,10 +83,37 @@ export default function App() {
   const [categories, setCategories] = useState(initialCategories);
   const [users, setUsers] = useState([]);
 
+
+
+  useEffect(() => {
+    async function loadUsers() {
+      try {
+        const userData = await api.getUsers('Project0');
+        setUsers(userData);
+      } catch (error) {
+        console.error('ERROR', error);
+      }
+    }
+
+    async function loadCategories() {
+      try {
+        
+
+      } catch(error) {
+        console.err('ERROR', error);
+      }
+    }
+
+
+    loadUsers();
+  }, []);
+
+
   const addNewCategory = async () => {
     const newId = uuidv4();
+    //const projectName = "Project0" --> need to pull in the active project name, once we have that available from database
 
-    await api.createCategory({ categoryId: newId, name: 'New Category'});
+    await api.createCategory({ categoryId: newId, name: 'New Category', projectName: 'Project0'});
 
     setCategories({
       ...categories,
@@ -125,8 +159,9 @@ export default function App() {
     });
   };
 
-  const removeUser = (userId) => {
+  const removeUser = ({userId, projectName}) => {
     setUsers((prevUsers) => {
+      api.removeUser({userId, projectName});
       const updatedUsers = prevUsers.filter((user) => user._id !== userId);
       console.log('Users before:', prevUsers);
       console.log('Users after:', updatedUsers);

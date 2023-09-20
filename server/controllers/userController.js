@@ -44,7 +44,7 @@ userController.updateUser = (req, res, next) => {
         });
       }
       res.locals.user = data;
-      return next()
+      return next();
     })
     .catch(err => {
       return next({
@@ -59,12 +59,13 @@ userController.updateUser = (req, res, next) => {
 
 // delete a user
 userController.removeUser = (req, res, next) => {
-  const { name } = req.params;
-  User.deleteOne( {name: name} ).exec()
+  console.log('Hitting userController.removeUser');
+  const { userId } = req.query;
+  User.deleteOne( {_id: userId} ).exec()
     .then(data => {
       if (!data) {
         return next({
-          log: `userController.removeUser: ${name} was not found in the database`,
+          log: `userController.removeUser: ${userId} was not found in the database`,
           message: {
             err: 'User not found'
           },
@@ -86,5 +87,20 @@ userController.removeUser = (req, res, next) => {
     });
 };
 
+userController.getUsersById = (req, res, next) => {
+  const arr = res.locals.userArray;
+
+  User.find({ _id: { $in: arr } })
+    .then((data) => {
+      res.locals.users = data;
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: 'error occurred while getting users from project: ' + err,
+        message: { err: 'error occurred while getting users from project: ' + err },
+      });
+    });
+};
 
 module.exports = userController;
