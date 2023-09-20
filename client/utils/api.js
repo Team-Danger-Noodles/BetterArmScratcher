@@ -51,7 +51,7 @@ export const api = {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({id: userData}),
     });
     return await response.json();
   },
@@ -88,4 +88,11 @@ export const api = {
     });
     return await response.json();
   },
+
+  getUsers: async () => {
+    const response = await fetch(`${BASE_URL}/route/user`, {
+      method: 'GET'
+    });
+    return await response.json();
+  }
 };

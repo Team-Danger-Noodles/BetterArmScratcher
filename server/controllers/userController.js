@@ -59,8 +59,8 @@ userController.updateUser = (req, res, next) => {
 
 // delete a user
 userController.removeUser = (req, res, next) => {
-  const { name } = req.params;
-  User.deleteOne( {name: name} ).exec()
+  const { id } = req.body;
+  User.deleteOne( {_id: id} ).exec()
     .then(data => {
       if (!data) {
         return next({
@@ -86,5 +86,20 @@ userController.removeUser = (req, res, next) => {
     });
 };
 
-
+userController.getUsers = (req, res, next) => {
+  User.find().exec()
+    .then(data => {
+      res.locals.foundUsers = data;
+      return next();
+    })
+    .catch(err => {
+      return next({
+        log: `userController.removeUser: Error ${err}`,
+        message: {
+          err: 'Error occurred in userController.removeUser. Check server logs'
+        },
+        status: 400,
+      });
+    });
+};
 module.exports = userController;

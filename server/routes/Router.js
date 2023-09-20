@@ -38,6 +38,9 @@ router.delete('/user', userController.removeUser, (req, res) => {
   res.status(200).json(res.locals.deletedUser);
 });
 
+router.get('/user', userController.getUsers, (req, res) => {
+  res.status(200).json(res.locals.foundUsers);
+});
 // TASK CONTROLLERS
 router.get('/task', taskController.getTask, (req, res) => {
   console.log('finished getting tasks', res.locals.task);

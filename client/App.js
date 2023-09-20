@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import Category from './components/Category';
 import Users from './components/Users';
+import { api } from './utils/api';
+import { db } from '../server/models/userModel';
 
 const initialCategories = {
   [uuidv4()]: {
@@ -71,6 +73,21 @@ export default function App() {
   const [categories, setCategories] = useState(initialCategories);
   const [users, setUsers] = useState([]);
 
+
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const userData = await api.getUsers();
+        setUsers(userData); // Update the users state with fetched data
+      } catch (error) {
+        console.error('ERROR IN USE', error);
+      }
+    }
+
+    fetchUsers();
+  }, []);
+
+
   const addNewCategory = () => {
     const newId = uuidv4();
     setCategories({
@@ -119,6 +136,7 @@ export default function App() {
 
   const removeUser = (userId) => {
     setUsers((prevUsers) => {
+      api.removeUser(userId);
       const updatedUsers = prevUsers.filter((user) => user._id !== userId);
       console.log('Users before:', prevUsers);
       console.log('Users after:', updatedUsers);
