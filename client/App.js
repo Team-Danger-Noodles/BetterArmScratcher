@@ -25,7 +25,10 @@ console.log('INIT CATE: ', initialCategories);
 
 const onDragEnd = (result, categories, setCategories, users, setUsers) => {
   const { source, destination } = result;
-
+  console.log('result:', result);
+  console.log('source:', source);
+  console.log('Destination', destination);
+  
   // Checks if item was dropped outside of the droppable environment
   if (!destination) return;
 
@@ -55,6 +58,12 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
       },
     });
   } else {
+    //BACKEND CALLS
+    api.swapTasks({taskId: result.draggableId, sourceId: result.source.droppableId, destinationId: destination.droppableId});
+
+
+
+
     // Moving tasks between different categories
     console.log(source);
     console.log(destination);
@@ -102,7 +111,7 @@ export default function App() {
         console.log(allCategories);
         setCategories(allCategories);
       } catch(error) {
-        console.err('ERROR', error);
+        console.error('ERROR', error);
       }
     }
 

@@ -137,6 +137,18 @@ export const api = {
   },
 
 
+  
+  swapTasks: async (projectInfo) => {
+    const response = await fetch(`${BASE_URL}/route/categorySwap`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(projectInfo),
+    });
+    return await response.json();
+  }
+  
 
 };
 

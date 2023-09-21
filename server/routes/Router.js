@@ -26,6 +26,11 @@ router.delete('/category', categoryController.removeCategory, (req, res) => {
   res.status(200).json(res.locals.category);
 });
 
+router.post('/categorySwap', categoryController.popSource, categoryController.pushDestination, (req, res) => {
+  console.log('finished swapping tasks between category', res.locals.data);
+  res.status(200).json(res.locals.data);
+});
+
 // USER CONTROLLERS
 router.post('/user', userController.addUser, projectController.addUser, (req, res) => {
   console.log('added user', res.locals.newUser);

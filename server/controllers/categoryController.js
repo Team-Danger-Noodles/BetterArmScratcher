@@ -98,6 +98,44 @@ categoryController.getCategoriesById = (req, res, next) => {
 };
 
 
+categoryController.pushDestination = (req, res, next) => {
+  const { destinationId, taskId } = req.body;
+  
+  Category.findOneAndUpdate(
+    {_id: destinationId},
+    {$push: { tasks: taskId }}
+  )
+    .then((data) => {
+      res.locals.pushData = data;
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: 'error occurred while adding task to category: ' + err,
+        message: { err: 'error occurred while adding task to category: ' + err },
+      });
+    });
+};
+
+//asdasdasd
+
+  
+  
+categoryController.popSource = (req, res, next) => {
+  const { sourceId, taskId } = req.body;
+  
+  Category.findOneAndUpdate(
+    {_id: sourceId},
+    {$pull: {tasks: taskId}}
+  )
+    .then(data => {
+      res.locals.popData = data;
+      return next();
+    })
+    .catch(err => {
+      return next({log:'error removing task from category on drag / drop ' + err, message: { err: 'error occurred while adding task to category: ' + err }});
+    });
+};  
 
 
 
