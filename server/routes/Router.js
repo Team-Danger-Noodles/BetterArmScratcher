@@ -9,11 +9,7 @@ const projectController = require('../controllers/projectController');
 
 //CATEGORY CONTROLLERS
 
-
-router.get('/category', categoryController.getCategory, (req, res) => {
-  console.log('finished getting categoriies', res.locals.category);
-  res.status(200).json(res.locals.category);
-});
+// /get route for categories --> in the "projects" section @ bottom
 
 router.post('/category', categoryController.addCategory, projectController.addCategory, (req, res) => {
   console.log('finished creating category', res.locals.category);
@@ -73,14 +69,23 @@ router.post('/project', projectController.addProject, (req, res) => {
   res.status(201).json(res.locals.project);
 });
 
+
 router.get('/project', projectController.getProject, (req, res) => {
   console.log('finished getting project');
   res.status(200).json(res.locals.project);
 });
 
+
 router.get('/user', projectController.getUsers, userController.getUsersById, (req, res) => {
   console.log('finished getting users off of project');
   res.status(200).json(res.locals.users);
 });
+
+
+router.get('/category', projectController.getCategories, categoryController.getCategoriesById, categoryController.convert, (req, res) => {
+  console.log('finished getting categoriies', res.locals.categoriesArray);
+  res.status(200).json(res.locals.stateCache);
+});
+
 
 module.exports = router;

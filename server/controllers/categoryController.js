@@ -81,4 +81,37 @@ categoryController.addTaskToCategory = async (req, res, next) => {
   }
 };
 
+categoryController.getCategoriesById = (req, res, next) => {
+  const arr = res.locals.categoriesArray;
+  
+  Category.find({ _id: { $in: arr } })
+    .then((data) => {
+      res.locals.categories = data;
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: 'error occurred while getting categories from project: ' + err,
+        message: { err: 'error occurred while getting categories from project: ' + err },
+      });
+    });
+};
+
+
+
+
+
+categoryController.convert = (req, res, next) => {
+  const stateCache = {};
+  // res.locals.categories.map((category) => {
+  //   return {[category.categoryId]: {name: category.name, items: category.tasks}};
+  // });
+  res.locals.categories.forEach((category) => {
+    stateCache[category.categoryId] = {name: category.name, items: category.tasks};
+  });
+  res.locals.stateCache = stateCache;
+  return next();
+  // iterate through what's returned by map --> palce those objects into stateCache w/ their ID
+};
+
 module.exports = categoryController;

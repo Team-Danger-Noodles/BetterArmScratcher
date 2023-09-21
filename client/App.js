@@ -97,8 +97,10 @@ export default function App() {
 
     async function loadCategories() {
       try {
-        
-
+        const allCategories = await api.getCategories('Project0');
+        console.log('allCategories: ', allCategories);
+        console.log(allCategories);
+        setCategories(allCategories);
       } catch(error) {
         console.err('ERROR', error);
       }
@@ -106,6 +108,7 @@ export default function App() {
 
 
     loadUsers();
+    loadCategories();
   }, []);
 
 

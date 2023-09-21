@@ -45,8 +45,6 @@ export const api = {
     return await response.json();
   },
 
-  
-
   removeUser: async (userData) => {
     const response = await fetch(`${BASE_URL}/route/user?userId=${userData.userId}&projectName=${userData.projectName}`, {
       method: 'DELETE',
@@ -137,6 +135,8 @@ export const api = {
     });
     return await response.json();
   },
+
+
 
 };
 

@@ -76,6 +76,7 @@ projectController.addCategory = async (req, res, next) => {
   }
 };
 
+
 projectController.getUsers = (req, res, next) => {
   const { projectName } = req.query;
   Project.findOne({name: projectName})
@@ -87,10 +88,29 @@ projectController.getUsers = (req, res, next) => {
     .catch((err) => {
       return next({
         log: 'error occurred while getting users from project: ' + err,
-        message: { err: 'error occurred while getting users from project: ' + err },
+        message: { err: 'error occurred while getting users from project: ' + err }
       });
     });
 };
+
+
+projectController.getCategories = (req, res, next) => {
+  const { projectName } = req.query;
+  Project.findOne({name: projectName})
+    .then((project) => {
+      res.locals.categoriesArray = project.categories;
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: 'error occured while getting categories from project: ' + err,
+        message: { err: 'error occured while getting categories from project: ' + err}
+      });
+    });
+};
+
+
+
 
 projectController.removeUser = (req, res, next) => {
   console.log('Hitting projectController.removeUser');

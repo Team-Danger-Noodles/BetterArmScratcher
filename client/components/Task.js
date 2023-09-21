@@ -18,7 +18,10 @@ export default function Task({ task, index, onTaskClick, onTaskRemove }) {
             ...provided.draggableProps.style,
           }}
         >
-          <div className='taskContent' onClick={() => onTaskClick(task)}>
+          <div className='taskContent' onClick={() => {
+            onTaskClick(task);
+            console.log('CLICK');
+          }}>
             {task.Task_Name}
           </div>
           <button
