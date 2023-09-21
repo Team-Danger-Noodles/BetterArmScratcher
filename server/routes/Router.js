@@ -32,11 +32,17 @@ router.post('/categorySwap', categoryController.popSource, categoryController.pu
 });
 
 // USER CONTROLLERS
-router.post('/user', userController.addUser, projectController.addUser, (req, res) => {
+router.post('/signup', userController.addNewUser,  projectController.addUser, (req, res) => {
   console.log('added user', res.locals.newUser);
   res.status(200).json(res.locals.newUser);
 });
-
+router.post('/google', userController.addNewUser, projectController.addUser, (req, res) => {
+  console.log('added user', res.locals.newUser);
+  res.status(200).json(res.locals.newUser);
+});
+router.post('/login', userController.login, (req, res) => {
+  res.status(200).json(res.locals.userDoc);
+});
 
 ////////////
 router.delete('/user', userController.removeUser, projectController.removeUser, (req, res) => {

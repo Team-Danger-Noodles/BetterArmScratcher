@@ -82,8 +82,8 @@ export default function Category({ category, categoryId, addNewTask, removeTask,
   const handleTaskRemove = async (taskData) => {
     const removedTask = await api.removeTask({_id: taskData});
     if (removedTask){
-      removeTask(categoryId, removedTask);
-      handleCloseModal();
+      removeTask(categoryId, removedTask ); // MEOW MEOW MEOW
+      handleCloseModal();    
     }
   };
   

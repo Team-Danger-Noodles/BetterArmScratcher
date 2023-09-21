@@ -4,6 +4,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 
+
 const PORT = 3000;
 const app = express();
 
@@ -23,6 +24,8 @@ mongoose
   .catch((err) => {
     console.error('MongoDB connection error:', err);
   });
+
+app.use(cors({origin: 'http://localhost:8080'}));
 
 //handles parsing data & allows form data requests
 app.use(cors());

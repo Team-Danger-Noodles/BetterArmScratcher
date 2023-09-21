@@ -103,6 +103,54 @@ userController.getUsersById = (req, res, next) => {
     });
 };
 
+//add new user profile 
+userController.addNewUser = (req, res, next) => {
+  const { firstName, username, password } = req.body;
+  console.log(req.body);
+
+  User.create({
+    name: firstName,
+    username,
+    password,
+  })
+    .then((data) => {
+      res.locals.newUser = data;
+      console.log('new user ->', data);
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: `userController.addUser: Error ${err}`,
+        message: {
+          err: "Error occurred in userController.addUser. Check server logs",
+        },
+        status: 400,
+      });
+    });
+};
+
+//login User
+
+userController.login = async (req, res, next) => {
+  const { username, password } = req.body;
+  console.log('hello')
+  try {
+    const userDoc = await User.findOne({ username });
+    console.log(userDoc)
+    if(userDoc){
+      res.locals.loggedIn = userDoc
+      return next();
+    } else {
+      console.log('wrong credentials');
+      return next({log:'login failed'})
+    }
+
+    
+  } catch (err) {
+    return next({ log: "login controller failed", message: { err } });
+  }
+};
+
 
 
 
