@@ -100,9 +100,10 @@ categoryController.getCategoriesById = (req, res, next) => {
 
 categoryController.pushDestination = (req, res, next) => {
   const { destinationId, taskId } = req.body;
-  
+  console.log('DESTINATION ID IN PUSH --> ', destinationId )
+  console.log('TASK ID IN PUSH -> ', taskId);
   Category.findOneAndUpdate(
-    {_id: destinationId},
+    {categoryId: destinationId},
     {$push: { tasks: taskId }}
   )
     .then((data) => {
@@ -117,15 +118,13 @@ categoryController.pushDestination = (req, res, next) => {
     });
 };
 
-//asdasdasd
-
-  
   
 categoryController.popSource = (req, res, next) => {
   const { sourceId, taskId } = req.body;
-  
+  console.log('SOURCE ID IN POP -> ', sourceId);
+  console.log('TASK ID IN POP -> ', taskId);
   Category.findOneAndUpdate(
-    {_id: sourceId},
+    {categoryId: sourceId},
     {$pull: {tasks: taskId}}
   )
     .then(data => {
@@ -147,6 +146,7 @@ categoryController.convert = (req, res, next) => {
   res.locals.categories.forEach((category) => {
     stateCache[category.categoryId] = {name: category.name, items: category.tasks};
   });
+  console.log('STATE CACHE ->:', stateCache);
   res.locals.stateCache = stateCache;
   return next();
   // iterate through what's returned by map --> palce those objects into stateCache w/ their ID

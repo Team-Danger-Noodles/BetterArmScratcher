@@ -59,7 +59,11 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
     });
   } else {
     //BACKEND CALLS
-    api.swapTasks({taskId: result.draggableId, sourceId: result.source.droppableId, destinationId: destination.droppableId});
+    console.log(result.draggableId)
+    console.log(result.source.droppableId)
+    console.log(result.destination.droppableId)
+
+    api.swapTasks({taskId: result.draggableId, sourceId: result.source.droppableId, destinationId: result.destination.droppableId});
 
 
 
@@ -108,8 +112,9 @@ export default function App() {
       try {
         const allCategories = await api.getCategories('Project0');
         console.log('allCategories: ', allCategories);
-        console.log(allCategories);
+
         setCategories(allCategories);
+        console.log('CATEGORIES IN USE EFFECT:', categories);
       } catch(error) {
         console.error('ERROR', error);
       }
@@ -117,8 +122,13 @@ export default function App() {
 
 
     loadUsers();
-    loadCategories();
+    loadCategories(); // 
   }, []);
+
+
+
+
+
 
 
   const addNewCategory = async () => {

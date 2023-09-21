@@ -26,9 +26,9 @@ router.delete('/category', categoryController.removeCategory, (req, res) => {
   res.status(200).json(res.locals.category);
 });
 
-router.post('/categorySwap', categoryController.popSource, categoryController.pushDestination, (req, res) => {
-  console.log('finished swapping tasks between category', res.locals.data);
-  res.status(200).json(res.locals.data);
+router.post('/categorySwap', categoryController.popSource, categoryController.pushDestination,  (req, res) => {
+  console.log('finished swapping tasks between category', res.locals.pushData);
+  res.status(200).json(res.locals.pushData);
 });
 
 // USER CONTROLLERS
@@ -87,7 +87,7 @@ router.get('/user', projectController.getUsers, userController.getUsersById, (re
 });
 
 
-router.get('/category', projectController.getCategories, categoryController.getCategoriesById, categoryController.convert, (req, res) => {
+router.get('/category', projectController.getCategories, categoryController.getCategoriesById, categoryController.convert, taskController.convert, (req, res) => {
   console.log('finished getting categoriies', res.locals.categoriesArray);
   res.status(200).json(res.locals.stateCache);
 });

@@ -1,3 +1,5 @@
+
+
 const Task = require('../models/taskModel');
 
 const taskController = {};
@@ -72,5 +74,37 @@ taskController.editTask = async (req, res, next) => {
   }
 
 
+};
+
+
+taskController.convert = async (req, res, next) => {
+  const promises = [];
+
+  for (const [key, value] of Object.entries(res.locals.stateCache)) {
+    const taskPromise = Task.find({ _id: { $in: value.items } })
+      .then((data) => {
+        value.items = data; // Assign the results directly
+      })
+      .catch((err) => {
+        return next({
+          log: 'failed to update task',
+          message: { err: `failed to update task: ${err}` },
+        });
+      });
+
+    promises.push(taskPromise);
+  }
+
+  try {
+    await Promise.all(promises); // Wait for all promises to resolve
+    console.log('All Task.find() operations completed successfully');
+    console.log('Updated res.locals.stateCache:', res.locals.stateCache);
+    return next();
+  } catch (error) {
+    return next({
+      log: 'An error occurred while processing Task.find() operations',
+      message: { error: error.message },
+    });
+  }
 };
 module.exports = taskController;
