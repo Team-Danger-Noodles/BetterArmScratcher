@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import UserItem from './UserItem';
 import { api } from '../utils/api';
+import { useNavigate } from 'react-router';
 
 export default function User({ users, userId, addNewUser, removeUser }) {
   const handleFormSubmit = async (event) => {
+    
     event.preventDefault();
     const formData = new FormData(event.target);
     const userData = {};
@@ -22,6 +24,12 @@ export default function User({ users, userId, addNewUser, removeUser }) {
     if (newUser) {
       addNewUser(newUser);
     }
+  };
+
+  const navigate = useNavigate();
+  
+  const logout = () => {
+    return navigate('/login');
   };
 
   return (
@@ -56,6 +64,8 @@ export default function User({ users, userId, addNewUser, removeUser }) {
         <input className='userInput' name='name' placeholder='Username' required />
         <button className='add-task-button' type='submit'>+ Add</button>
       </form>
+      <button onClick={logout} className='logout-button' > logout </button>
+
     </div>
   );
 }

@@ -11,6 +11,8 @@ import { api } from './utils/api';
 const todoID = uuidv4();
 
 
+
+
 //NEED TO GIVE PROJECTS 
 
 //need to do an API call to backend w/ the array of category ID's 
@@ -97,7 +99,8 @@ const onDragEnd = (result, categories, setCategories, users, setUsers) => {
 
 
 export default function Homepage(){
-    const [categories, setCategories] = useState(initialCategories);
+  const navigate = useNavigate();
+  const [categories, setCategories] = useState(initialCategories);
   const [users, setUsers] = useState([]);
 
 
@@ -219,6 +222,11 @@ export default function Homepage(){
         items: newItems,
       },
     });
+  };
+
+  const handleLogOut = () => {
+    navigate('/login');
+   
   };
 
   return (

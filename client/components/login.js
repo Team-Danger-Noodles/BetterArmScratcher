@@ -90,52 +90,61 @@ export default function Login() {
   };
 
   return (
+    <div className="logPage">
     <div>
-      {existingAccount && (
-        <div>
-          <div>Scrum Board</div>
+      {/* <h2 className="appTitle">Scrum Board</h2> */}
+      <h1 className="appTitle" style={{ textAlign: 'center' }}>Scrum Bums! </h1>
+      <div  className = "smallTitle" style={{ textAlign: 'center', fontSize: "20px"}}><strong>Created By:</strong> <span style={{fontSize: "2px"}}>Them Pink Fair Armadillos</span></div>
+      <div  className = "smallTitle"  style={{ textAlign: 'center', marginBottom: '45px', fontSize: "20px"}}><strong>Iterated On By:</strong> Los Danger Noodles</div>    
 
-          <h2>Login Here:</h2>
-          <form>
-            <div>
-              <input
-                type="text"
-                id="username"
-                placeholder="Enter Your Username: "
-                value={username}
-                onChange={(event) => {
-                  setUsername(event.target.value);
-                }}
-              />
-            </div>
-            <div>
-              <input
-                type="password"
-                id="password"
-                placeholder="Enter Your Password:"
-                value={password}
-                onChange={(event) => {
-                  setPassword(event.target.value);
-                }}
-              />
-            </div>
-            <div onClick={log}>
-              <button>Sign In</button>
-            </div>
-            <div>
-              <button onClick={switchToSignUp}>No account? Sign up</button>
-            </div>
-            <div id="signinDiv"></div>
-            <div></div>
-          </form>
-        </div>
-      )}
-
-      {!existingAccount && (
-        <div onSubmit={reg}>
-          <form action="">
-            <h2>Register</h2>
+    </div>
+    {existingAccount && (
+      <div>
+        <h4 className="logTitle">Please Log In:</h4>
+        <form className="logForms">
+          <div className="inputForm">
             <input
+              className="inputBox"
+              type="text"
+              id="username"
+              placeholder="Enter Your Username: "
+              value={username}
+              onChange={(event) => {
+                setUsername(event.target.value);
+              }}
+            />
+          </div>
+          <div className="inputForm">
+            <input
+              className="inputBox"
+              type="password"
+              id="password"
+              placeholder="Enter Your Password:"
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
+            />
+          </div>
+          <div onClick={log} className="btnDiv">
+            <button className="logBtn">Sign In</button>
+          </div>
+          <div className="btnDiv">
+            <button onClick={switchToSignUp} className="logBtn">No account? Sign up</button>
+          </div>
+          <div id="signinDiv"></div>
+          <div></div>
+        </form>
+      </div>
+    )}
+
+    {!existingAccount && (
+      <div onSubmit={reg}>
+        <form className="logForms" action="">
+          <h4 className="logTitle">Register Here:</h4>
+          <div className="inputForm">
+            <input
+              className="inputBox"
               type="text"
               placeholder="First Name"
               value={firstName}
@@ -143,7 +152,11 @@ export default function Login() {
                 setFirstName(event.target.value);
               }}
             />
+          </div>
+
+          <div className="inputForm">
             <input
+              className="inputBox"
               type="text"
               placeholder="username"
               value={username}
@@ -151,21 +164,30 @@ export default function Login() {
                 setUsername(event.target.value);
               }}
             />
+          </div>
+
+          <div className="inputForm">
             <input
+              className="inputBox"
               type="password"
               placeholder="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
-            <button>Sign-Up</button>
-            <div>
-              <button onClick={switchToLogin}>
-                Already have an account? Log-in
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
-    </div>
+          </div>
+          <div className="btnDiv">
+            <button className="logBtn">Sign-Up</button>
+
+          </div>
+
+          <div className="btnDiv">
+            <button onClick={switchToLogin} className="logBtn">
+              Already have an account? Log-in
+            </button>
+          </div>
+        </form>
+      </div>
+    )}
+  </div>
   );
 }
