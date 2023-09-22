@@ -42,6 +42,10 @@ projectController.addProject = (req, res, next) => {
 
 
 projectController.addUser = (req, res, next) => {
+  if (res.locals.userExists) {
+    return next();
+  }
+
   const { projectName } = req.body;
   const userId = res.locals.newUser._id;
   Project.findOneAndUpdate(

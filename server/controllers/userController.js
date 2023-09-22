@@ -104,9 +104,21 @@ userController.getUsersById = (req, res, next) => {
 };
 
 //add new user profile 
-userController.addNewUser = (req, res, next) => {
+userController.addNewUser = async (req, res, next) => {
   const { firstName, username, password } = req.body;
-  console.log(req.body);
+
+  try{
+    const response = await User.findOne ({username: username});
+    if (response) {
+      res.locals.userExists = true;
+      res.locals.newUser = response;
+      console.log(response);
+      return next();
+    }
+  } catch(error){
+    console.log(error);
+  }
+  
 
   User.create({
     name: firstName,
@@ -122,7 +134,7 @@ userController.addNewUser = (req, res, next) => {
       return next({
         log: `userController.addUser: Error ${err}`,
         message: {
-          err: "Error occurred in userController.addUser. Check server logs",
+          err: "Error occurred in userController.addNewUser. Check server logs",
         },
         status: 400,
       });
@@ -152,6 +164,20 @@ userController.login = async (req, res, next) => {
 };
 
 
+userController.checkUser  = async (req, res, next) => {
+  const {username, password} = req.body;
+  try{
+    const response = await User.findOne ({username: username});
+    if (response) return response.status(500).json({message: 'no. USER ALREADY EXIIIIIIISTS'});
+    else return next();
+  } catch(error){
+    console.log(error);
+
+  }
+ 
+  
+  
+}
 
 
 module.exports = userController;
